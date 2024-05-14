@@ -2,26 +2,56 @@
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 17.3.6.
 
-## Development server
+## Nueva sintaxis de Angular 17
+> Angular 17 introduce una nueva sintaxis para la directiva `ngFor` que permite seguir objetos en lugar de índices.
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The application will automatically reload if you change any of the source files.
 
-## Code scaffolding
+          @for (p of products; track product ){
+                ...
+            <div>{{p.name}}</div>
+                ...
+          }
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
 
-## Build
+La directiva `track` se utiliza para indicar a Angular que debe seguir el objeto `product` en lugar de seguir el índice del bucle. Esto es útil cuando se trabaja con objetos que pueden cambiar de posición en el array, como por ejemplo cuando se ordena la lista de productos por precio.
+Antes:
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory.
+            <div *ngFor="let p of products; let i = index">
+                <div>{{p.name}}</div>
+            </div>
+**ejemplo de product.componet**
 
-## Running unit tests
+## Cambiar estado sin usar el método
+> Angular 17 introduce una nueva forma de cambiar el estado de un componente sin tener que utilizar el método `setState`.
+ En lugar de utilizar el método `setState`, se puede utilizar la directiva `state` para cambiar el estado de un componente.
 
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
+Antes: 
+ 
+    export class HeaderComponent {
+        isMobileMenu: boolean = false;
+        toggleMobileMenu() {
+        this.isMobileMenu = !this.isMobileMenu;
+        }
+    }
+    <button type="button" (click)="toggleUserMenu()" >Abrir
+    </button>
 
-## Running end-to-end tests
+Ahora:
 
-Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To use this command, you need to first add a package that implements end-to-end testing capabilities.
+    export class HeaderComponent {
+        isMobileMenu: boolean = false;
+    }
+    <button type="button" (click)="isMobileMenu = true" >Abrir
+    </button>
 
-## Further help
+**ejemplo de header.componet**
 
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.
+## Comunicación entre componente padre e hijo
+> Angular 17 introduce una nueva forma de comunicación entre un componente padre y un componente hijo utilizando la directiva `@Input` y la directiva `@Output`.
+ La directiva `@Input` se utiliza para pasar datos desde un componente padre a un componente hijo.
+
+        export class ProductComponent {
+            @Input() product: Product;
+        }
+        <app-product [product]="product"></app-product>
+**ejemplo de product.componet**
