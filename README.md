@@ -55,3 +55,51 @@ Ahora:
         }
         <app-product [product]="product"></app-product>
 **ejemplo de product.componet**
+
+
+## Formatos solicitudes http
+
+>  HttpParams para construir el cuerpo de la solicitud POST. Esto es útil cuando la API espera recibir los datos en formato application/x-www-form-urlencoded, que es esencialmente una cadena de consulta codificada.
+
+
+´´´
+import { HttpClient, HttpParams, HttpHeaders } from '@angular/common/http';
+
+// ...
+
+const body = new HttpParams()
+.set('q', text)
+.set('target', target)
+.set('source', source);
+
+const httpOptions = {
+headers: new HttpHeaders({
+'x-rapidapi-key': 'your-rapidapi-key',
+'x-rapidapi-host': 'google-translatelp.rapidapi.com',
+'Content-Type': 'application/x-www-form-urlencoded'
+}),
+};
+
+return this._http.post('https://google-translatelp.rapidapi.com/language/translate/v2', body.toString(), httpOptions);
+´´´
+
+> FormData para construir el cuerpo de la solicitud POST. Esto es útil cuando la API espera recibir los datos en formato multipart/form-data, que es esencialmente un formulario HTML.
+
+´´´
+getIpInfo(ip:string): Observable<any> {
+const httpOptions = {
+headers: new HttpHeaders({
+'x-rapidapi-key': '36c3c902e4mshd611dd0973a3d42p1af69djsnb5e312555d5b',
+'x-rapidapi-host': 'community-neutrino-ip-info.p.rapidapi.com',
+'Content-Type': 'application/json'
+}),
+};
+
+    const body = {
+      ip: ip,
+      'reverse-lookup': 'checked'
+    };
+
+    return this._http.post('https://community-neutrino-ip-info.p.rapidapi.com/ip-info', body, httpOptions);
+}
+´´´
